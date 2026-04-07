@@ -1,19 +1,18 @@
 # Lab: Network Enumeration & Service Discovery
 
 ### **1. Objective**
-The goal of this lab was to perform an active scan of the target network to identify live hosts, open ports, and the specific versions of services running to map the attack surface.
+Perform active reconnaissance to map the attack surface and identify specific service versions for vulnerability mapping.
 
 ### **2. Execution**
 * **Tool:** Nmap
 * **Command:** `nmap -sV -O 192.168.1.2`
-* **Steps:** 1. Performed service version detection (`-sV`) to identify outdated software.
-  2. Used OS Fingerprinting (`-O`) to determine the target operating system (Linux/Ubuntu).
+* **Findings:** Identified Port 80 (Apache 2.2.8), Port 445 (Samba), and Port 3306 (MySQL) active.
 
 ### **3. Proof of Concept**
-* **Log:** `nmap-results.txt`
-* **Screenshot:** ![Nmap Scan Results](nmap_results_screenshot.png)
+* **Output:** `nmap-results.txt`
+* **Screenshot:** ![Nmap Scan](nmap_results_screenshot.png)
 
-### **4. Mitigation**
-* **Service Hardening:** Disable unnecessary services and ports (e.g., if MySQL isn't needed externally, block port 3306).
-* **Firewalling:** Implement a "Default Deny" policy.
-* **Banner Grabbing Defense:** Configure the web server to suppress version numbers in HTTP headers.
+### **4. Mitigation Strategy**
+* **Service Hardening:** Disable unnecessary services (SMB/MySQL) on public-facing interfaces.
+* **Firewalling:** Implement a Host-based Intrusion Prevention System (HIPS) or firewall to restrict port access to authorized management IPs only.
+* **Information Throttling:** Disable banner grabbing by configuring `ServerTokens Prod` and `ServerSignature Off` in the web server config to hide version numbers.
